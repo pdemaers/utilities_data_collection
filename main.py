@@ -12,7 +12,10 @@ import streamlit_authenticator as stauth
 
 # Function to connect to MongoDB
 def connect_to_mongodb():
-    client = MongoClient(st.secrets["MONGODB_URL"])
+    username = st.secrets["mongo_username"]
+    password = st.secrets["mongo_password"]
+    cluster_url = st.secrets["mongo_cluster_url"]
+    client = MongoClient(f"mongodb+srv://{username}:{password}@{cluster_url}/")
     db = client[st.secrets["DATABASE_NAME"]]
     collection = db[st.secrets["COLLECTION_NAME"]]
     return collection
