@@ -37,6 +37,7 @@ def data_collection():
         date = selected_date.strftime("%Y-%m-%dT%H:%M:%SZ")
         electricity_day = st.number_input("Enter Electricity Day:", min_value=0)
         electricity_night = st.number_input("Enter Electricity Night:", min_value=0)
+        electricity_car = st.number_input("Enter Electricity Car:", min_value=0)
         gas = st.number_input("Enter Gas:", min_value=0)
 
         # Every form must have a submit button
@@ -49,6 +50,7 @@ def data_collection():
                 "date": date,    
                 "electricity_day": electricity_day,
                 "electricity_night": electricity_night,
+                "electricity_car": electricity_car,
                 "gas": gas
             }
             collection.insert_one(data)
@@ -114,13 +116,14 @@ if st.session_state["authentication_status"] == None:
 
 if st.session_state["authentication_status"]:
 
-    authenticator.logout("Logout", "main")
-    st.write(f"Logged in user: *{name}*")
-
     st.title("Utilities Data Management")
     st.text("Enter new utilities usage data and get electricity and gas usage analysis.")
 
     with st.sidebar:
+
+        authenticator.logout("Logout", "main")
+        st.write(f"Logged in user: *{name}*")
+
         selected = option_menu(
             menu_title="Main menu",
             options=["Data entry usage", "Data table", "Data plots"],
